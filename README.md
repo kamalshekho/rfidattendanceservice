@@ -45,7 +45,7 @@ Before installing packages or running the app, you need to activate the virtual 
 #### Windows:
 
 ```bash
-venv\Scripts\activate
+.\venv\Scripts\Activate.ps1
 ```
 
 #### macOS/Linux:
