@@ -1,0 +1,35 @@
+# rfid_server.py
+import serial
+import time
+
+# Serielle Verbindung (anpassen!)
+# Prüfe mit: ls /dev/tty*
+ser = serial.Serial('/dev/ttyACM1', 9600, timeout=1)
+time.sleep(2)  # kurze Wartezeit, bis Verbindung stabil ist
+
+# Beispiel-Datenbank
+valid_cards = {
+    "1234ABCD": "Jay",
+    "AB12CD34": "Lisa",
+    "C0FFEE12": "Admin"
+}
+
+print("RFID-Server gestartet. Warte auf Karten...")
+
+while True:
+    if ser.in_waiting > 0:
+        line = ser.readline().decode('utf-8').strip()
+
+        if line.startswith("CARD:"):
+            card_uid = line.replace("CARD:", "")
+            print(f"Karte erkannt: {card_uid}")
+
+            if card_uid in valid_cards:
+                print(f"Zutritt erlaubt für {valid_cards[card_uid]}")
+                ser.write(b"OK\n")
+            else:
+                print("Unbekannte Karte – Zutritt verweigert.")
+                ser.write(b"DENY\n")
+        else:
+            print("Fehlerhafte Daten empfangen.")
+            ser.write(b"ERROR\n")
