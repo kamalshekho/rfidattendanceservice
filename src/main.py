@@ -4,7 +4,7 @@ import time
 
 SERIAL_PORT = '/dev/ttyUSB0'
 BAUD_RATE = 9600
-API_URL = 'https://mypi-lf7.duckdns.org/'
+API_URL = 'http://localhost:8080/mod/rfidattendance/api.php'
 VERIFY_SSL = True
 
 def readUid(ser):
@@ -17,7 +17,11 @@ def readUid(ser):
     return None
 
 def postUid(uid):
-    data = {'uid': uid}
+    data = {
+    'uid': uid,
+    'courseid': 1,  
+    'userid': 3     
+}
     try:
         response = requests.post(API_URL, json=data, verify=VERIFY_SSL)
         if response.ok:
