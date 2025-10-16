@@ -2,9 +2,9 @@ import serial
 import requests
 import time
 
-SERIAL_PORT = '/dev/ttyUSB0'
+SERIAL_PORT = '/dev/AMC0'
 BAUD_RATE = 9600
-API_URL = 'http://localhost:8080/mod/rfidattendance/api.php'
+API_URL = 'https://mypi-lf7.duckdns.org/mod/rfidattendance/api.php'
 VERIFY_SSL = False
 
 def read_uid(ser):
